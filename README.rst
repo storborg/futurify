@@ -24,7 +24,11 @@ Add some future statements to a file tree::
 
 Add some, remove others::
 
-    $ futurify -print_function +division myproject/
+    $ futurify -print_function -with_statement +division hello.py
+
+Dry run::
+
+    $ futurify --dry-run -with_statement +absolute_import +print_function myproject/
 
 
 API Usage
