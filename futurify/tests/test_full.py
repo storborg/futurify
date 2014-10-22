@@ -38,7 +38,7 @@ class TestFull(TestCase):
               '+absolute_import', '-print_function',
               dest])
         # Check that all files are unchanged.
-        for fn in ('simple.py', 'multiline.py', 'complex.py'):
+        for fn in ('simple.py', 'multiline.py', 'complex.py', 'nonpython.txt'):
             self.assertTrue(files_match(os.path.join(examples_dir, fn),
                                         os.path.join(dest, fn)))
 
@@ -52,4 +52,37 @@ class TestFull(TestCase):
         # Check that files are changed correctly.
         for fn in ('simple.py', 'multiline.py', 'complex.py'):
             self.assertTrue(files_match(os.path.join(desired_dir, fn),
+                                        os.path.join(dest, fn)))
+        # Check that non *.py file was unchanged.
+        fn = 'nonpython.txt'
+        self.assertTrue(files_match(os.path.join(examples_dir, fn),
+                                    os.path.join(dest, fn)))
+
+    def test_nonexistent_path(self):
+        path = os.path.join(work_dir, 'this-path-should-definitely-not-exist')
+        with self.assertRaises(ValueError):
+            main(['futurify',
+                  '--silent',
+                  '+print_function',
+                  path])
+
+    def test_usage(self):
+        with self.assertRaises(ValueError):
+            main(['futurify',
+                  'hello'])
+
+    def test_call_with_file(self):
+        dest = os.path.join(work_dir, 'examples')
+        self.copy_examples(dest)
+        main(['futurify',
+              '--silent',
+              '+absolute_import', '-print_function',
+              os.path.join(dest, 'complex.py')])
+        # Check that complex.py is changed correctly.
+        fn = 'complex.py'
+        self.assertTrue(files_match(os.path.join(desired_dir, fn),
+                                    os.path.join(dest, fn)))
+        # Check that other files are unchanged.
+        for fn in ('simple.py', 'multiline.py', 'nonpython.txt'):
+            self.assertTrue(files_match(os.path.join(examples_dir, fn),
                                         os.path.join(dest, fn)))

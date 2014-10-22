@@ -1,0 +1,7 @@
+"""
+This is a file that's got some python code in it, including a tempting __future__ statement, but doesn't have the .py extension, so it shouldn't get modified.
+"""
+
+from __future__ import with_statement
+
+print("Nope.")

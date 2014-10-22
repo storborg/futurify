@@ -244,5 +244,5 @@ def main(args=sys.argv):
         for path in paths:
             process_tree(path, add=add, remove=remove, dry_run=dry_run)
     else:
-        print("usage: %s <+keywords> <-keywords> <paths>" %
-              os.path.basename(args[0]))
+        raise ValueError("usage: %s <+keywords> <-keywords> <paths>" %
+                         os.path.basename(args[0]))
