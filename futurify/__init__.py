@@ -59,9 +59,6 @@ def find_future_imports(f):
             yield start_line_no, end_line_no, imports
             so_far = []
 
-    if inside_parens:
-        raise SyntaxError("got to end of file without closing paren")
-
 
 def intervals_to_set(intervals):
     """
