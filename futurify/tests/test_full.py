@@ -66,10 +66,15 @@ class TestFull(TestCase):
                   '+print_function',
                   path])
 
-    def test_usage(self):
-        with self.assertRaises(ValueError):
+    def test_usage_without_changes(self):
+        with self.assertRaises(SystemExit):
             main(['futurify',
                   'hello'])
+
+    def test_usage_without_paths(self):
+        with self.assertRaises(SystemExit):
+            main(['futurify',
+                  '+print_function'])
 
     def test_call_with_file(self):
         dest = os.path.join(work_dir, 'examples')

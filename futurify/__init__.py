@@ -12,6 +12,16 @@ log = logging.getLogger(__name__)
 
 leader = 'from __future__ import '
 
+recommendations = """
+Some recommended __future__ imports for Python 3 compatibility are:
+
+    +absolute_import
+    +division
+    +print_function
+    +unicode_literals
+
+See https://docs.python.org/2/library/__future__.html for an up-to-date list."""
+
 
 def find_future_imports(f):
     """
@@ -241,5 +251,8 @@ def main(args=sys.argv):
         for path in paths:
             process_tree(path, add=add, remove=remove, dry_run=dry_run)
     else:
-        raise ValueError("usage: %s <+keywords> <-keywords> <paths>" %
-                         os.path.basename(args[0]))
+        msg = ("usage: %s <+keywords> <-keywords> <paths>" %
+               os.path.basename(args[0]))
+        if paths:
+            msg += "\n" + recommendations
+        raise SystemExit(msg)
